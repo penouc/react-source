@@ -1,0 +1,390 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Scheduler源码 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    React
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="scheduler.html">
+            
+                <a href="scheduler.html">
+            
+                    
+                    Scheduler源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Scheduler源码</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="scheduler-&#x6E90;&#x7801;&#x9605;&#x8BFB;">scheduler &#x6E90;&#x7801;&#x9605;&#x8BFB;</h1>
+<h2 id="&#x5168;&#x5C40;&#x53D8;&#x91CF;">&#x5168;&#x5C40;&#x53D8;&#x91CF;</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">&#x5B57;&#x6BB5;</th>
+<th style="text-align:center">&#x89E3;&#x91CA;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">enableSchedulerDebugging</td>
+<td style="text-align:center">&#x662F;&#x5426;&#x5141;&#x8BB8; Scheduler &#x53EF;&#x4EE5; debug </td>
+</tr>
+<tr>
+<td style="text-align:center">ImmediatePriority</td>
+<td style="text-align:center">&#x503C;&#x4E3A; 1&#xFF0C;&#x5373;&#x65F6;&#x4F18;&#x5148;&#x7EA7;&#xFF0C;&#x6700;&#x9AD8;&#x7684;&#x4F18;&#x5148;&#x7EA7;</td>
+</tr>
+<tr>
+<td style="text-align:center">UserBlockingPriority</td>
+<td style="text-align:center">&#x503C;&#x4E3A; 2&#xFF0C;&#x7528;&#x6237;&#x963B;&#x585E;&#x4F18;&#x5148;&#x7EA7;</td>
+</tr>
+<tr>
+<td style="text-align:center">NormalPriority</td>
+<td style="text-align:center">&#x503C;&#x4E3A; 3&#xFF0C;&#x666E;&#x901A;&#x4F18;&#x5148;&#x7EA7; </td>
+</tr>
+<tr>
+<td style="text-align:center">LowPriority</td>
+<td style="text-align:center">&#x503C;&#x4E3A; 4&#xFF0C; &#x4F4E;&#x4F18;&#x5148;&#x7EA7;</td>
+</tr>
+<tr>
+<td style="text-align:center">IdlePriority</td>
+<td style="text-align:center">&#x503C;&#x4E3A; 5 &#xFF0C;&#x7A7A;&#x95F2;&#x65F6;&#x4F18;&#x5148;&#x7EA7;</td>
+</tr>
+<tr>
+<td style="text-align:center">maxSigned31BitInt</td>
+<td style="text-align:center">// Math.pow(2, 30) - 1&#xFF0C;0b111111111111111111111111111111&#xFF0C; 1073741823 &#x6700;&#x5927;&#x65E0;&#x7B26;&#x53F7;&#x6574;&#x578B;</td>
+</tr>
+<tr>
+<td style="text-align:center">IMMEDIATE_PRIORITY_TIMEOUT</td>
+<td style="text-align:center">// Times out immediately&#xFF0C; &#x503C;&#x4E3A; -1&#xFF0C; &#x7ACB;&#x5373;&#x8FC7;&#x671F;</td>
+</tr>
+<tr>
+<td style="text-align:center">USER_BLOCKING_PRIORITY</td>
+<td style="text-align:center">// Eventually times out &#x503C;&#x4E3A; 250 &#xFF0C;&#x5355;&#x4F4D;&#x6BEB;&#x79D2;&#xFF0C;250 &#x6BEB;&#x79D2;&#x8FC7;&#x671F;</td>
+</tr>
+<tr>
+<td style="text-align:center">NORMAL_PRIORITY_TIMEOUT</td>
+<td style="text-align:center">&#x666E;&#x901A;&#x4EFB;&#x52A1;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;5000 &#x6BEB;&#x79D2;&#x8FC7;&#x671F;</td>
+</tr>
+<tr>
+<td style="text-align:center">LOW_PRIORITY_TIMEOUT</td>
+<td style="text-align:center">&#x4F4E;&#x4F18;&#x5148;&#x7EA7;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;10000 &#x6BEB;&#x79D2;&#x8FC7;&#x671F;</td>
+</tr>
+<tr>
+<td style="text-align:center">IDLE_PRIORITY</td>
+<td style="text-align:center">&#x6C38;&#x4E0D;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x5927;&#x6982;12&#x5929;&#x5DE6;&#x53F3;</td>
+</tr>
+</tbody>
+</table>
+<div class="api-method"><div class="api-method-definition"><h2 id="unstablerunwithpriority">unstable_runWithPriority</h2>
+<p><strong>&#x4F20;&#x5165;&#x53C2;&#x6570;</strong>   </p>
+<ul>
+<li>priorityLevel &#x4F18;&#x5148;&#x7EA7;</li>
+<li>eventHandler &#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x7A0B;&#x5E8F;</li>
+</ul>
+<p><strong>&#x65B9;&#x6CD5;&#x4ECB;&#x7ECD;</strong></p>
+<blockquote>
+<p>&#x9996;&#x5148;&#x5BF9;&#x4F20;&#x5165;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x8FDB;&#x884C;&#x5224;&#x65AD;&#xFF0C;&#x5E76;&#x4E14;&#x901A;&#x8FC7; switch &#x8BED;&#x53E5;&#x6765;&#x4FEE;&#x6539;&#x5168;&#x5C40;&#x53D8;&#x91CF; currentPriorityLevel &#x7684;&#x503C;&#xFF0C;&#x5E76;&#x4E14;&#x6267;&#x884C;&#x4F20;&#x5165;&#x7684;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x7A0B;&#x5E8F;</p>
+</blockquote>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unstable_runWithPriority</span>(<span class="hljs-params">priorityLevel, eventHandler</span>) </span>{
+  <span class="hljs-keyword">switch</span> (priorityLevel) {
+    <span class="hljs-keyword">case</span> ImmediatePriority:
+    <span class="hljs-keyword">case</span> UserBlockingPriority:
+    <span class="hljs-keyword">case</span> NormalPriority:
+    <span class="hljs-keyword">case</span> LowPriority:
+    <span class="hljs-keyword">case</span> IdlePriority:
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">default</span>:
+      priorityLevel = NormalPriority;
+  }
+
+  <span class="hljs-keyword">var</span> previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">return</span> eventHandler();
+  } <span class="hljs-keyword">finally</span> {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+}
+</code></pre>
+</div></div></div>
+
+<div class="api-method"><div class="api-method-definition"><h2 id="unstablenext">unstable_next</h2>
+<p><strong>&#x4F20;&#x5165;&#x53C2;&#x6570;</strong>  </p>
+<ul>
+<li>eventHandler &#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x7A0B;&#x5E8F;</li>
+</ul>
+<p><strong>&#x65B9;&#x6CD5;&#x4ECB;&#x7ECD;</strong>
+&gt;</p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unstable_next</span>(<span class="hljs-params">eventHandler</span>) </span>{
+  <span class="hljs-keyword">var</span> priorityLevel;
+  <span class="hljs-keyword">switch</span> (currentPriorityLevel) {
+    <span class="hljs-keyword">case</span> ImmediatePriority:
+    <span class="hljs-keyword">case</span> UserBlockingPriority:
+    <span class="hljs-keyword">case</span> NormalPriority:
+      <span class="hljs-comment">// Shift down to normal priority</span>
+      priorityLevel = NormalPriority;
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">default</span>:
+      <span class="hljs-comment">// Anything lower than normal priority should remain at the current level.</span>
+      priorityLevel = currentPriorityLevel;
+      <span class="hljs-keyword">break</span>;
+  }
+
+  <span class="hljs-keyword">var</span> previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">return</span> eventHandler();
+  } <span class="hljs-keyword">finally</span> {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+}
+</code></pre>
+</div></div></div>
+
+
+
+
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Scheduler源码","level":"1.2.1","depth":2,"previous":{"title":"React","level":"1.2","depth":1,"ref":"","articles":[{"title":"Scheduler源码","level":"1.2.1","depth":2,"path":"react/scheduler.md","ref":"react/scheduler.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"JavaScript","default":true},{"lang":"go","name":"Go"}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"react/scheduler.md","mtime":"2019-08-13T07:58:36.892Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-13T07:12:26.896Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+
