@@ -1,0 +1,26 @@
+{
+  "name": "react-source",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gitbook-api": "^3.0.2",
+    "gitbook-plugin-theme-api": "^1.1.2",
+    "gulp": "^4.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf docs/** && gitbook build && cp -r ./_book/. ./docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/penouc/react-source.git"
+  },
+  "author": "pen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/penouc/react-source/issues"
+  },
+  "homepage": "https://github.com/penouc/react-source#readme"
+}
